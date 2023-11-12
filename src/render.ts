@@ -188,10 +188,10 @@ function generateFooter(siteConfig: SiteConfig, path: string): string {
         contents.push(`<p>${desp}</p>`);
     }
     if (siteConfig.legalInfo) {
-        contents.push(`${siteConfig.legalInfo}`);
+        contents.push(`<p>${siteConfig.legalInfo}</p>`);
     }
     if (siteConfig.showPoweredBy) {
         contents.push(`<p>Powered by <a href="https://github.com/cmj2002/r2-dir-list">r2-dir-list</a></p>`);
     }
-    return contents.join('<br>');
+    return contents.join('');
 }

@@ -182,6 +182,9 @@ footer {
     font-size: 12px;
     text-align: center;
 }
+footer p {
+    margin-bottom: 0.5em;
+}
 @media (max-width: 600px) {
     .hideable {
         display: none;
