@@ -1,10 +1,11 @@
-import { svgs, cssStyle } from './static';
+import { svgs, cssStyle, defaultFavicon } from './static';
 import { SiteConfig } from './types';
 
 export var renderTemplFull = (files: R2Object[], folders: string[], path: string, config: SiteConfig) => {
     return `<!DOCTYPE html>
     <html>
     <head>
+        <link rel="icon" href="${config.favicon??defaultFavicon}" type="image/png">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${renderTemplTitle(config.name, path)}</title>

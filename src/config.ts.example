@@ -17,6 +17,9 @@ export function getSiteConfig(env: Env, domain: string): SiteConfig | undefined 
             /// and you can put it here.
             /// It will be treated as raw HTML.
             // legalInfo: "Legal information of your website",
+
+            /// favicon, should be a URL. Default to Cloudflare R2's logo
+            // favicon: ''
         },
     };
     return configs[domain];

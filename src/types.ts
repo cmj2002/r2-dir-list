@@ -10,4 +10,5 @@ export interface SiteConfig {
     };
     legalInfo?: string;
     showPoweredBy?: boolean;
+    favicon?: string;
 }
