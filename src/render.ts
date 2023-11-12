@@ -103,7 +103,7 @@ var renderTemplFolders = (folders: string[], siteConfig: SiteConfig) => {
         output += `<tr class="file ">
                             <td class="hideable"></td>
                             <td class="name"><a href="/${folders[i]}"><svg width="1.5em" height="1em" version="1.1" viewBox="0 0 317 259"><use xlink:href="#folder"></use></svg><span class="name">${cleanFolderName(folders[i])}</span></a></td>
-                            <td class="description">${findDesp(siteConfig, '/'+cleanFolderName(folders[i]), true)??"&mdash;"}</td>
+                            <td class="description">${findDesp(siteConfig, '/'+folders[i].slice(0, -1), true)??"&mdash;"}</td>
                             <td class="size">&mdash;</td>
                             <td class="date hideable">&mdash;</td>
                             <td class="hideable"></td>
