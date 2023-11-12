@@ -1,0 +1,23 @@
+import { Env, SiteConfig } from './types';
+
+export function getSiteConfig(env: Env, domain: string): SiteConfig | undefined {
+    const configs: {[domain: string]: SiteConfig} = {
+        'bucketdomain.example.com': {
+            name: "Name of your website",
+            bucket: env.BUCKET_bucketname,
+            desp: {
+                '/': "Description of your website at default",
+                '/path': "Description of your website at /path",
+                '/path/to/file.txt': "Description of file /path/to/file.txt",
+            },
+            showPoweredBy: true, // Set to false to hide the "Powered by" information at footer
+
+            /// Legal information of your website
+            /// Your local government (for example Mainland China) may requires you to put some legal info at footer
+            /// and you can put it here.
+            /// It will be treated as raw HTML.
+            // legalInfo: "Legal information of your website",
+        },
+    };
+    return configs[domain];
+}

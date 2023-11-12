@@ -1,3 +1,7 @@
+# user specific
+src/config.ts
+wrangler.toml
+
 # Logs
 
 logs
