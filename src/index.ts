@@ -2,6 +2,38 @@ import { Env } from './types';
 import { renderTemplFull } from './render';
 import { getSiteConfig } from './config';
 
+async function listBucket(bucket: R2Bucket, options?: R2ListOptions): Promise<R2Objects> {
+    // List all objects in the bucket, launch new request if list is truncated
+    const objects: R2Object[] = [];
+    const delimitedPrefixes: string[] = [];
+
+    // delete limit, cursor in passed options
+    const requestOptions = {
+        ...options,
+        limit: undefined,
+        cursor: undefined,
+    };
+
+    var cursor = undefined;
+    while (true) {
+        const index = await bucket.list({
+            ...requestOptions,
+            cursor,
+        });
+        objects.push(...index.objects);
+        delimitedPrefixes.push(...index.delimitedPrefixes);
+        if (!index.truncated) {
+            break;
+        }
+        cursor = index.cursor;
+    }
+    return {
+        objects,
+        delimitedPrefixes,
+        truncated: false
+    };
+}
+
 export default {
     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
         const originResponse = await fetch(request);
@@ -20,8 +52,7 @@ export default {
             return originResponse;
         }
         const bucket = siteConfig.bucket;
-        const index = await bucket.list({
-            // TODO: Should manage limit here, but since I won't have more than 1000 files in a single folder, I just ignore it
+        const index = await listBucket(bucket, {
             prefix: objectKey,
             delimiter: '/',
             include: ['httpMetadata', 'customMetadata']
