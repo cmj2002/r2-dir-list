@@ -8,6 +8,7 @@ export interface SiteConfig {
     desp: {
         [path: string]: string;
     };
+    decodeURI?: boolean;
     legalInfo?: string;
     showPoweredBy?: boolean;
     favicon?: string;

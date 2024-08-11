@@ -56,14 +56,14 @@ export default {
         const url = new URL(request.url);
         const domain = url.hostname;
         const path = url.pathname;
-        // remove the leading '/'
-        const objectKey = path.slice(1);
 
         const siteConfig = getSiteConfig(env, domain);
         if (!siteConfig) {
             // TODO: Should send a email to notify the admin
             return originResponse;
         }
+        // remove the leading '/'
+        const objectKey = siteConfig.decodeURI ? decodeURIComponent(path.slice(1)) : path.slice(1);
 
         if (shouldReturnOriginResponse(originResponse, siteConfig)) {
             return originResponse;
@@ -83,7 +83,7 @@ export default {
         if (files.length === 0 && folders.length === 0 && originResponse.status === 404) {
             return originResponse;
         }
-        return new Response(renderTemplFull(files, folders, path, siteConfig), {
+        return new Response(renderTemplFull(files, folders, '/' + objectKey, siteConfig), {
             headers: {
                 'Content-Type': 'text/html; charset=utf-8',
             },

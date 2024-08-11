@@ -12,6 +12,10 @@ export function getSiteConfig(env: Env, domain: string): SiteConfig | undefined 
             },
             showPoweredBy: true, // Set to false to hide the "Powered by" information at footer
 
+            /// Decode URI when listing objects, useful when you have space or special characters in object key
+            /// Recommended to enable it for new installations, but default to false for backward compatibility
+            decodeURI: true, 
+
             /// [Optional] Legal information of your website
             /// Your local government (for example Mainland China) may requires you to put some legal info at footer
             /// and you can put it here.
