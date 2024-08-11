@@ -30,15 +30,15 @@ async function listBucket(bucket: R2Bucket, options?: R2ListOptions): Promise<R2
     return {
         objects,
         delimitedPrefixes,
-        truncated: false
+        truncated: false,
     };
 }
 
 function shouldReturnOriginResponse(originResponse: Response, siteConfig: SiteConfig): boolean {
-    const isNotEndWithSlash = (originResponse.url.slice(-1) !== '/');
-    const is404 = (originResponse.status === 404);
-    const isZeroByte = (originResponse.headers.get('Content-Length') === '0');
-    const overwriteZeroByteObject = (siteConfig.dangerousOverwriteZeroByteObject ?? false) && isZeroByte
+    const isNotEndWithSlash = originResponse.url.slice(-1) !== '/';
+    const is404 = originResponse.status === 404;
+    const isZeroByte = originResponse.headers.get('Content-Length') === '0';
+    const overwriteZeroByteObject = (siteConfig.dangerousOverwriteZeroByteObject ?? false) && isZeroByte;
 
     // order matters here
     if (isNotEndWithSlash) return true;
@@ -73,7 +73,7 @@ export default {
         const index = await listBucket(bucket, {
             prefix: objectKey,
             delimiter: '/',
-            include: ['httpMetadata', 'customMetadata']
+            include: ['httpMetadata', 'customMetadata'],
         });
         // filter out key===prefix, appears when dangerousOverwriteZeroByteObject===true
         const files = index.objects.filter((obj) => obj.key !== objectKey);
@@ -83,14 +83,11 @@ export default {
         if (files.length === 0 && folders.length === 0 && originResponse.status === 404) {
             return originResponse;
         }
-        return new Response(
-            renderTemplFull(files, folders, path, siteConfig),
-            {
-                headers: {
-                    'Content-Type': 'text/html; charset=utf-8',
-                },
-                status: 200,
+        return new Response(renderTemplFull(files, folders, path, siteConfig), {
+            headers: {
+                'Content-Type': 'text/html; charset=utf-8',
             },
-        );
+            status: 200,
+        });
     },
 };
