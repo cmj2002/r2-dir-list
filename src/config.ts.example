@@ -20,6 +20,13 @@ export function getSiteConfig(env: Env, domain: string): SiteConfig | undefined 
 
             /// [Optional] favicon, should be a URL to **PNG IMAGE**. Default to Cloudflare R2's logo
             // favicon: ''
+
+            /// [Optional] **Dangerous**: Enabling it may disrupte the normal reading of existing object
+            /// By default, r2-dir-list will not list directory if the request path is a object to prevent disrupting
+            /// the normal reading of existing object.
+            /// Enabling this will allow r2-dir-list to list directory even if the request path is a 0-byte object.
+            /// Do not use them unless you know what you are doing!
+            // dangerousOverwriteZeroByteObject: false,
         },
     };
     return configs[domain];
