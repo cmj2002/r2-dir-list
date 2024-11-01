@@ -12,3 +12,8 @@ routes = [
 r2_buckets  = [
     { binding = "BUCKET_bucketname", bucket_name = "bucketname"}
 ]
+
+[observability]
+# https://developers.cloudflare.com/workers/observability/logs/workers-logs/
+enabled = true
+head_sampling_rate = 1 # optional. default = 1.
