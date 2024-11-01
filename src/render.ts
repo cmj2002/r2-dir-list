@@ -92,7 +92,6 @@ var renderTemplBreadcrumbs = (path: string) => {
         currentPath += parts[i] + '/';
         output += `<a href="${currentPath}">${parts[i]}</a> / `;
     }
-    console.log(output);
     return output;
 };
 
